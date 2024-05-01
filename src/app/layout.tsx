@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const UrbanistFont = Urbanist({
+  subsets: ["latin"],
+  variable: "--font-urbanist",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -12,11 +17,18 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="fr">
+      <body
+        className={cn(
+          "font-urbanist min-h-screen antialiased",
+          UrbanistFont.variable,
+        )}
+      >
+        {children}
+      </body>
     </html>
   );
 }
