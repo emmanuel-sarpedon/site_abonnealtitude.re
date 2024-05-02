@@ -13,7 +13,7 @@ import {
   Ol,
   P,
   Ul,
-} from "@/components/typography";
+} from "@/components/Typography";
 import Link from "next/link";
 import Image from "next/image";
 

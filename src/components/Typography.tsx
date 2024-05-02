@@ -62,10 +62,16 @@ export function P({
   bold,
   italic,
   muted,
-}: PropsWithChildren & { bold?: boolean; italic?: boolean; muted?: boolean }) {
+  className,
+}: PropsWithChildren & {
+  bold?: boolean;
+  italic?: boolean;
+  muted?: boolean;
+  className?: string;
+}) {
   return (
     <p
-      className={cn("leading-7 [&:not(:first-child)]:mt-6", {
+      className={cn("leading-7 [&:not(:first-child)]:mt-6", className, {
         "font-semibold": !!bold,
         italic: !!italic,
         "text-muted-foreground text-sm": !!muted,
