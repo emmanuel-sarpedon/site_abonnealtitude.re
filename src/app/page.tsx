@@ -20,8 +20,8 @@ export default async function Home({
   const { page, pageCount } = meta.pagination;
 
   return (
-    <main className="mx-auto min-h-screen max-w-[1400px] px-10 py-32 2xl:px-0">
-      <H1 className={"mb-32 "}>Nos derniers articles</H1>
+    <main className="mx-auto min-h-screen max-w-[1400px] px-10 py-20 xl:py-32 2xl:px-0">
+      <H1 className={"my-20 xl:mb-32"}>Nos derniers articles</H1>
 
       <div className={"flex flex-wrap justify-center gap-10 lg:justify-start"}>
         {data?.length ? (

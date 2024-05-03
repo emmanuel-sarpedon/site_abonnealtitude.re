@@ -23,18 +23,20 @@ const ArticleCard = (props: {
   Titre: string | null;
   Contenu: BlocksContent | null;
 }) => {
-  return (
-    <Card className={"w-full sm:w-96"}>
-      <CardHeader>
-        <CardTitle className={"line-clamp-2"}>{props.Titre}</CardTitle>
-        <div>
-          <ReadingTime Contenu={props.Contenu} />
-        </div>
-      </CardHeader>
+  const href = `/${props.id}/${slugify(props.Titre)}`;
 
-      <CardContent>
-        <P className={"line-clamp-4"}>{extractParagraph(props.Contenu)}</P>
-      </CardContent>
+  return (
+      <Card className={"w-full border-white hover:border-slate-700 sm:w-96"}>
+        <CardHeader>
+          <CardTitle className={"line-clamp-2"}>{props.Titre}</CardTitle>
+          <div>
+            <ReadingTime Contenu={props.Contenu} />
+          </div>
+        </CardHeader>
+
+        <CardContent>
+          <P className={"line-clamp-4"}>{extractParagraph(props.Contenu)}</P>
+        </CardContent>
 
       <CardFooter>
         <Button asChild>

@@ -43,6 +43,12 @@ const Page = async ({ params }: { params: { id: string } }) => {
 
   const headings = extractHeading(Contenu);
 
+  const hashMaps: Record<string, string> = {};
+
+  headings.forEach(({ text, hash }) => {
+    hashMaps[text] = hash;
+  });
+
   return (
     <main className={"mx-auto max-w-[650px] px-10 pb-32 pt-20 md:px-0"}>
       <Breadcrumb className={"my-10"}>
@@ -79,7 +85,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
             .map((heading) => (
               <li
                 key={heading.hash}
-                className={cn("ml-0 list-none hover:font-semibold", {
+                className={cn("ml-0 list-none hover:font-semibold truncate", {
                   // "ml-2": heading.level === 2,
                   "ml-4": heading.level === 3,
                   "ml-6": heading.level === 4,
@@ -93,7 +99,7 @@ const Page = async ({ params }: { params: { id: string } }) => {
         </Ul>
       </nav>
 
-      <RichContentBlocks content={Contenu} />
+      <RichContentBlocks content={Contenu} hashMaps={hashMaps} />
 
       <BackToArticlesList className={"mt-32"} />
     </main>

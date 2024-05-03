@@ -16,9 +16,14 @@ import {
 } from "@/components/Typography";
 import Link from "next/link";
 import Image from "next/image";
-import { createHash } from "crypto";
 
-const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
+const RichContentBlocks = ({
+  content,
+  hashMaps,
+}: {
+  content: BlocksContent;
+  hashMaps: Record<string, string>;
+}) => {
   return (
     <BlocksRenderer
       content={content}
@@ -29,9 +34,10 @@ const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
           // @ts-ignore (missing type)
           const text = children.at(0).props.text;
 
-          const hash = createHash("sha256")
-            .update(JSON.stringify({ text, level }))
-            .digest("hex");
+          // const hash = createHash("sha256")
+          //   .update(JSON.stringify({ text, level }))
+          //   .digest("hex");
+          const hash = hashMaps[text];
 
           switch (level) {
             case 1:
