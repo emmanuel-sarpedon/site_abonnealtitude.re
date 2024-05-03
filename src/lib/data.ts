@@ -1,31 +1,26 @@
 import { notFound } from "next/navigation";
-import { revalidateTag } from "next/cache";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
+import qs from "qs";
 
-export async function getArticle(
-  id: string,
-  options?: { revalidate?: boolean },
-) {
-  if (options?.revalidate) revalidateTag(`article_${id}`);
-
-  const { data } = await fetch(
-    `${process.env.STRAPI_URL as string}/api/articles/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-      next: {
-        tags: [`article_${id}`],
-      },
+export async function getArticle(id: string) {
+  const { data } = await fetch(`${process.env.STRAPI_URL}/api/articles/${id}`, {
+    headers: {
+      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-  ).then((res) => res.json());
+    next: {
+      tags: [`article_${id}`],
+    },
+  }).then((res) => res.json());
 
   if (!data?.attributes) notFound();
 
   return data?.attributes;
 }
 
-export async function getArticles(): Promise<{
+export async function getArticles(options?: {
+  page?: number;
+  limit?: number;
+}): Promise<{
   data: {
     id: number;
     attributes: { Titre: string | null; Contenu: BlocksContent };
@@ -39,12 +34,23 @@ export async function getArticles(): Promise<{
     };
   };
 }> {
-  return fetch(`${process.env.STRAPI_URL as string}/api/articles`, {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+  return fetch(
+    `${process.env.STRAPI_URL as string}/api/articles?${qs.stringify(
+      {
+        pagination: {
+          page: Math.max(options?.page || 1, 1),
+          pageSize: options?.limit || 10,
+        },
+      },
+      { encodeValuesOnly: true },
+    )}`,
+    {
+      headers: {
+        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+      },
+      next: {
+        tags: ["articles"],
+      },
     },
-    next: {
-      tags: ["articles"],
-    },
-  }).then((res) => res.json());
+  ).then((res) => res.json());
 }

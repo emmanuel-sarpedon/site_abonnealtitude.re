@@ -17,12 +17,24 @@ import {
 } from "@/components/ui/breadcrumb";
 import { extractHeading } from "@/lib/extractHeading";
 import { cn } from "@/lib/utils";
+import { Metadata } from "next";
+import { slugify } from "@/lib/slugify";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
   const { Titre } = await getArticle(params.id);
 
   return {
     title: Titre,
+    alternates: {
+      canonical: new URL(
+        `/${params.id}/${slugify(Titre)}`,
+        process.env.NEXT_PUBLIC_URL,
+      ),
+    },
   };
 }
 

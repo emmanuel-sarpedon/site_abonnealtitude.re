@@ -15,7 +15,6 @@ import { Link2Icon } from "@radix-ui/react-icons";
 import { slugify } from "@/lib/slugify";
 import { Skeleton } from "@/components/ui/skeleton";
 import { extractParagraph } from "@/lib/extractParagraph";
-import { readingTime } from "@/lib/readingTime";
 import { LapTimerIcon } from "@radix-ui/react-icons";
 import ReadingTime from "@/components/ReadingTime";
 
@@ -28,9 +27,9 @@ const ArticleCard = (props: {
     <Card className={"w-full sm:w-96"}>
       <CardHeader>
         <CardTitle className={"line-clamp-2"}>{props.Titre}</CardTitle>
-        <CardDescription>
+        <div>
           <ReadingTime Contenu={props.Contenu} />
-        </CardDescription>
+        </div>
       </CardHeader>
 
       <CardContent>
