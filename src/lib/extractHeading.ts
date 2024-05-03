@@ -1,5 +1,5 @@
 import { BlocksContent } from "@strapi/blocks-react-renderer";
-import { createHash } from "node:crypto";
+import { createHash } from "crypto";
 
 export const extractHeading = (
   content: BlocksContent | null,
@@ -23,6 +23,7 @@ export const extractHeading = (
                 .digest("hex"),
             }))
         );
-      }).flat()
+      })
+      .flat()
   );
 };

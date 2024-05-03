@@ -16,7 +16,7 @@ import {
 } from "@/components/Typography";
 import Link from "next/link";
 import Image from "next/image";
-import { createHash } from "node:crypto";
+import { createHash } from "crypto";
 
 const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
   return (
