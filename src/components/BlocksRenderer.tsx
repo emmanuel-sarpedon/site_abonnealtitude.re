@@ -16,6 +16,7 @@ import {
 } from "@/components/Typography";
 import Link from "next/link";
 import Image from "next/image";
+import { createHash } from "node:crypto";
 
 const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
   return (
@@ -25,21 +26,28 @@ const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
         paragraph: ({ children }) => <P>{children}</P>,
 
         heading: ({ children, level }) => {
+          // @ts-ignore (missing type)
+          const text = children.at(0).props.text;
+
+          const hash = createHash("sha256")
+            .update(JSON.stringify({ text, level }))
+            .digest("hex");
+
           switch (level) {
             case 1:
-              return <H1>{children}</H1>;
+              return <H1 id={hash}>{children}</H1>;
             case 2:
-              return <H2>{children}</H2>;
+              return <H2 id={hash}>{children}</H2>;
             case 3:
-              return <H3>{children}</H3>;
+              return <H3 id={hash}>{children}</H3>;
             case 4:
-              return <H4>{children}</H4>;
+              return <H4 id={hash}>{children}</H4>;
             case 5:
-              return <H5>{children}</H5>;
+              return <H5 id={hash}>{children}</H5>;
             case 6:
-              return <H6>{children}</H6>;
+              return <H6 id={hash}>{children}</H6>;
             default:
-              return <H1>{children}</H1>;
+              return <H1 id={hash}>{children}</H1>;
           }
         },
 
@@ -52,20 +60,19 @@ const RichContentBlocks = ({ content }: { content: BlocksContent }) => {
           <InlineCode>{children || plainText}</InlineCode>
         ),
 
-        image: ({ children, image }) => (
-          <Image
-            src={image.url}
-            alt={image.alternativeText || ""}
-            width={image.width}
-            height={image.height}
-          />
-        ),
+        image: ({ image }) => {
+          return (
+            <Image
+              src={image.url}
+              alt={image.alternativeText || ""}
+              width={image.width}
+              height={image.height}
+              className={"w-full"}
+            />
+          );
+        },
 
         link: ({ children, url }) => <Link href={url}>{children}</Link>,
-      }}
-      modifiers={{
-        bold: ({ children }) => <P>{children}</P>,
-        italic: ({ children }) => <P italic>{children}</P>,
       }}
     />
   );

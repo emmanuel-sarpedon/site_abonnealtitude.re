@@ -1,12 +1,14 @@
-import { PropsWithChildren } from "react";
+import { HTMLAttributes, PropsWithChildren } from "react";
 import { cn } from "@/lib/utils";
 
 export function H1({
   children,
   className,
-}: PropsWithChildren & { className?: string }) {
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
     <h1
+      {...restProps}
       className={cn(
         "scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl",
         className,
@@ -17,41 +19,91 @@ export function H1({
   );
 }
 
-export function H2({ children }: PropsWithChildren) {
+export function H2({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
-    <h2 className="scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">
+    <h2
+      {...restProps}
+      className={cn(
+        "scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0",
+        className,
+      )}
+    >
       {children}
     </h2>
   );
 }
 
-export function H3({ children }: PropsWithChildren) {
+export function H3({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
-    <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+    <h3
+      {...restProps}
+      className={cn(
+        "scroll-m-20 text-2xl font-semibold tracking-tight",
+        className,
+      )}
+    >
       {children}
     </h3>
   );
 }
 
-export function H4({ children }: PropsWithChildren) {
+export function H4({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
-    <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+    <h4
+      {...restProps}
+      className={cn(
+        "scroll-m-20 text-xl font-semibold tracking-tight",
+        className,
+      )}
+    >
       {children}
     </h4>
   );
 }
 
-export function H5({ children }: PropsWithChildren) {
+export function H5({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
-    <h5 className="scroll-m-20 text-lg font-semibold tracking-tight">
+    <h5
+      {...restProps}
+      className={cn(
+        "scroll-m-20 text-lg font-semibold tracking-tight",
+        className,
+      )}
+    >
       {children}
     </h5>
   );
 }
 
-export function H6({ children }: PropsWithChildren) {
+export function H6({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLHeadingElement>>) {
   return (
-    <h6 className="scroll-m-20 text-base font-semibold tracking-tight">
+    <h6
+      {...restProps}
+      className={cn(
+        "scroll-m-20 text-base font-semibold tracking-tight",
+        className,
+      )}
+    >
       {children}
     </h6>
   );
@@ -63,7 +115,8 @@ export function P({
   italic,
   muted,
   className,
-}: PropsWithChildren & {
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLParagraphElement>> & {
   bold?: boolean;
   italic?: boolean;
   muted?: boolean;
@@ -71,6 +124,7 @@ export function P({
 }) {
   return (
     <p
+      {...restProps}
       className={cn("leading-7 [&:not(:first-child)]:mt-6", className, {
         "font-semibold": !!bold,
         italic: !!italic,
@@ -82,56 +136,155 @@ export function P({
   );
 }
 
-export function Blockquote({ children }: PropsWithChildren) {
+export function Blockquote({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLQuoteElement>>) {
   return (
-    <blockquote className="mt-6 border-l-2 pl-6 italic">{children}</blockquote>
+    <blockquote
+      {...restProps}
+      className={cn("mt-6 border-l-2 pl-6 italic", className)}
+    >
+      {children}
+    </blockquote>
   );
 }
 
-export function Table({ children }: PropsWithChildren) {
-  return <table className="w-full">{children}</table>;
-}
-
-export function Tr({ children }: PropsWithChildren) {
-  return <tr className="even:bg-muted m-0 border-t p-0">{children}</tr>;
-}
-
-export function Th({ children }: PropsWithChildren) {
+export function Table({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLTableElement>>) {
   return (
-    <th className="border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right">
+    <table {...restProps} className={cn("w-full", className)}>
+      {children}
+    </table>
+  );
+}
+
+export function Tr({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLTableRowElement>>) {
+  return (
+    <tr
+      {...restProps}
+      className={cn("even:bg-muted m-0 border-t p-0", className)}
+    >
+      {children}
+    </tr>
+  );
+}
+
+export function Th({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLTableCellElement>>) {
+  return (
+    <th
+      {...restProps}
+      className={cn(
+        "border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        className,
+      )}
+    >
       {children}
     </th>
   );
 }
 
-export function Td({ children }: PropsWithChildren) {
+export function Td({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLTableCellElement>>) {
   return (
-    <td className="border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right">
+    <td
+      {...restProps}
+      className={cn(
+        "border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        className,
+      )}
+    >
       {children}
     </td>
   );
 }
 
-export function Ul({ children }: PropsWithChildren) {
-  return <ul className="my-6 ml-6 list-disc [&>li]:mt-2">{children}</ul>;
-}
-
-export function Ol({ children }: PropsWithChildren) {
-  return <ol className="my-6 ml-6 list-decimal [&>li]:mt-2">{children}</ol>;
-}
-
-export function InlineCode({ children }: PropsWithChildren) {
+export function Ul({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLUListElement>>) {
   return (
-    <code className="bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
+    <ul
+      {...restProps}
+      className={cn("my-6 ml-6 list-disc [&>li]:mt-2", className)}
+    >
+      {children}
+    </ul>
+  );
+}
+
+export function Ol({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLOListElement>>) {
+  return (
+    <ol
+      {...restProps}
+      className={cn("my-6 ml-6 list-decimal [&>li]:mt-2", className)}
+    >
+      {children}
+    </ol>
+  );
+}
+
+export function InlineCode({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLElement>>) {
+  return (
+    <code
+      {...restProps}
+      className={cn(
+        "bg-muted relative rounded px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold",
+        className,
+      )}
+    >
       {children}
     </code>
   );
 }
 
-export function Large({ children }: PropsWithChildren) {
-  return <div className="text-lg font-semibold">{children}</div>;
+export function Large({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
+  return (
+    <div {...restProps} className={cn("text-lg font-semibold", className)}>
+      {children}
+    </div>
+  );
 }
 
-export function Small({ children }: PropsWithChildren) {
-  return <small className="text-sm font-medium leading-none">{children}</small>;
+export function Small({
+  children,
+  className,
+  ...restProps
+}: PropsWithChildren<HTMLAttributes<HTMLElement>>) {
+  return (
+    <small
+      {...restProps}
+      className={cn("text-sm font-medium leading-none", className)}
+    >
+      {children}
+    </small>
+  );
 }

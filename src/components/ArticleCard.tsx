@@ -1,10 +1,12 @@
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { BlocksContent } from "@strapi/blocks-react-renderer";
 import { P } from "@/components/Typography";
 import { Button } from "@/components/ui/button";
@@ -12,6 +14,10 @@ import Link from "next/link";
 import { Link2Icon } from "@radix-ui/react-icons";
 import { slugify } from "@/lib/slugify";
 import { Skeleton } from "@/components/ui/skeleton";
+import { extractParagraph } from "@/lib/extractParagraph";
+import { readingTime } from "@/lib/readingTime";
+import { LapTimerIcon } from "@radix-ui/react-icons";
+import ReadingTime from "@/components/ReadingTime";
 
 const ArticleCard = (props: {
   id: number;
@@ -21,22 +27,14 @@ const ArticleCard = (props: {
   return (
     <Card className={"w-full sm:w-96"}>
       <CardHeader>
-        <CardTitle>{props.Titre}</CardTitle>
+        <CardTitle className={"line-clamp-2"}>{props.Titre}</CardTitle>
+        <CardDescription>
+          <ReadingTime Contenu={props.Contenu} />
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
-        <P className={"line-clamp-4"}>
-          {props.Contenu?.filter(({ type }) => {
-            return type === "paragraph";
-          }).map(({ children }) => {
-            return (
-              children
-                .filter(({ type }) => type === "text")
-                // @ts-ignore (missing type)
-                .map(({ text }: { text: string }) => text)
-            );
-          })}
-        </P>
+        <P className={"line-clamp-4"}>{extractParagraph(props.Contenu)}</P>
       </CardContent>
 
       <CardFooter>
@@ -63,6 +61,13 @@ export const ArticleCardSkeleton = () => {
         <CardTitle>
           <Skeleton className={"h-12 w-full"} />{" "}
         </CardTitle>
+
+        <CardDescription>
+          <Badge className={"mt-4"} variant={"outline"}>
+            <LapTimerIcon className="mr-2 h-4 w-4" />
+            <Skeleton className={"h-4 w-20"} />
+          </Badge>
+        </CardDescription>
       </CardHeader>
 
       <CardContent>
